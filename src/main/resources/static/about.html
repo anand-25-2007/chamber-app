@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Advocate Amrendra Singh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --black: #0a0a0a; --dark-gray: #222222; --mid-gray: #555555; --light-gray: #f9f9f9; --white: #ffffff; --border: #e0e0e0; }
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--white); color: var(--dark-gray); line-height: 1.7; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: var(--black); font-weight: 700; }
+        .hidden { display: none !important; }
+        
+        /* Navigation Bar */
+        nav {
+            background-color: var(--black);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+        nav .logo { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1.4rem; letter-spacing: 2px; text-decoration: none; }
+        nav .nav-links { display: flex; gap: 30px; }
+        nav .nav-links a { color: #cccccc; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; transition: color 0.3s ease; }
+        nav .nav-links a:hover { color: var(--white); }
+
+        /* BCI Disclaimer Modal */
+        .disclaimer-modal { display: flex; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.95); align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .modal-content { background-color: var(--white); padding: 50px; border-radius: 2px; max-width: 650px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border-top: 6px solid var(--black); }
+        .modal-content h2 { margin-bottom: 20px; font-size: 2.2rem; }
+        .modal-content p { color: var(--mid-gray); text-align: justify; margin-bottom: 20px; }
+        .modal-content ul { text-align: left; color: var(--dark-gray); margin-bottom: 30px; padding-left: 20px; font-weight: 600; }
+        .modal-content li { margin-bottom: 10px; }
+        .btn { padding: 16px 32px; background-color: var(--black); color: var(--white); border: 2px solid var(--black); cursor: pointer; font-size: 14px; font-family: 'Open Sans', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s ease; width: 100%; }
+        .btn:hover { background-color: var(--white); color: var(--black); }
+
+        /* Small Hero Header for Inner Page */
+        .hero-small {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('ChatGPT Image May 31, 2026, 11_28_07 AM.png') no-repeat center center;
+            background-size: cover; padding: 80px 20px; text-align: center; border-bottom: 4px solid var(--black);
+        }
+        .hero-small h1 { color: var(--white); font-size: 2.8rem; letter-spacing: -0.5px; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9); margin: 0; }
+
+        /* About Section Layout */
+        .section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+        .about-wrapper { display: grid; grid-template-columns: 1fr 1.8fr; gap: 50px; align-items: center; }
+        .about-image img { width: 100%; border-radius: 4px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 4px solid var(--white); }
+        .about-content h3 { font-size: 1.8rem; margin-bottom: 20px; border-bottom: 2px solid var(--black); padding-bottom: 10px; display: inline-block; }
+        .about-content p { font-size: 1.05rem; margin-bottom: 15px; text-align: justify; }
+        .about-content ul { margin-left: 20px; margin-bottom: 20px; color: var(--dark-gray); }
+        .about-content li { margin-bottom: 8px; }
+
+        /* Floating Buttons & Footer */
+        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 1000; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .whatsapp-float:hover { background-color: #128C7E; transform: scale(1.1); box-shadow: 2px 2px 15px rgba(0,0,0,0.5); }
+        .instagram-float { position: fixed; width: 60px; height: 60px; bottom: 100px; right: 30px; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: #FFF; border-radius: 50px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 1000; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .instagram-float:hover { transform: scale(1.1); box-shadow: 2px 2px 15px rgba(0,0,0,0.5); }
+        footer { background-color: var(--black); color: var(--white); text-align: center; padding: 50px 20px; }
+        footer h2 { color: var(--white); margin-bottom: 10px; }
+        footer p { color: #888888; font-size: 0.9rem; margin-top: 10px; }
+
+        @media (max-width: 768px) { nav { flex-direction: column; gap: 15px; } .about-wrapper { grid-template-columns: 1fr; } .hero-small h1 { font-size: 2rem; } .whatsapp-float { bottom: 20px; right: 20px; } .instagram-float { bottom: 90px; right: 20px; } }
+    </style>
+</head>
+<body>
+
+<!-- The BCI Compliance Gate -->
+<div id="disclaimerModal" class="disclaimer-modal">
+    <div class="modal-content">
+        <h2>Terms of Access</h2>
+        <p>As per the rules of the Bar Council of India, advocates are strictly prohibited from soliciting work or advertising. By clicking "I Agree", you acknowledge that:</p>
+        <ul>
+            <li>You are seeking information about Advocate Amrendra Singh of your own accord.</li>
+            <li>There has been no solicitation, invitation, or inducement of any sort from the Advocate or his chamber.</li>
+            <li>The information provided on this website is for informational purposes only.</li>
+        </ul>
+        <button class="btn" onclick="acceptDisclaimer()">I Agree & Continue</button>
+    </div>
+</div>
+
+<!-- Main Content (Hidden until accepted) -->
+<div id="mainContent" class="hidden">
+    
+    <!-- Top Navigation -->
+    <nav>
+        <a href="/" class="logo">AMRENDRA SINGH</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about.html">About</a>
+        </div>
+    </nav>
+
+    <!-- Smaller Hero Banner for Inner Pages -->
+    <div class="hero-small">
+        <h1>About the Advocate</h1>
+    </div>
+
+    <!-- The Biography Section -->
+    <div class="section">
+        <div class="about-wrapper">
+            <div class="about-image">
+                <img src="Advocate 3.png" alt="Advocate Amrendra Singh Portrait">
+            </div>
+            <div class="about-content">
+                <h3>Advocate Amrendra Singh</h3>
+                <p>An alumnus of the prestigious Allahabad University holding B.A., M.A., and LL.B. degrees, Advocate Amrendra Singh has built a distinguished career spanning over two decades. Officially enrolled with the Bar Council in 2002, he operates out of the Judicature of the Allahabad High Court at Lucknow, bringing profound institutional knowledge and rigorous analysis to every brief.</p>
+                
+                <p>Demonstrating a strong record of public service and legal acumen, he currently serves as Government Counsel and represents the Nagar Palika Parishad (Municipal Council) of Nawabganj, Gonda. He has also been a dedicated, active member of the Oudh Bar Association since 2013.</p>
+
+                <p><strong>Legal Philosophy:</strong></p>
+                <p>Advocate Singh's practice is defined by a strictly thorough, fact-based approach to litigation. He maintains a meticulous standard for accepting matters, requiring:</p>
+                <ul>
+                    <li>A comprehensive evaluation of the client's total history.</li>
+                    <li>Full disclosure of any prior criminal offenses.</li>
+                    <li>Detailed analysis of all past disputes between the client and the opposing party.</li>
+                </ul>
+                <p>This uncompromising preliminary analysis ensures that there are no surprises in the courtroom, allowing for the formulation of an airtight and strategic legal defense.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <h2>AMRENDRA SINGH</h2>
+        <div style="margin: 20px 0; font-size: 1.05rem; color: #cccccc;">
+            <p style="margin: 5px 0; color: #cccccc;"><strong>Phone:</strong> +91 8299254109</p>
+            <p style="margin: 5px 0; color: #cccccc;"><strong>Email:</strong> amrendrasingh.advocate@gmail.com</p>
+            <p style="margin: 5px 0; color: #cccccc; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                </a>
+            </p>
+        </div>
+        <p>&copy; 2026 Advocate Amrendra Singh. All rights reserved.</p>
+        <p>Information provided on this website strictly complies with the Bar Council of India Rules.</p>
+    </footer>
+
+    <a href="https://wa.me/919451715363" class="whatsapp-float" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="35" height="35"><path fill="#ffffff" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157.1zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg></a>
+    <a href="https://instagram.com/amrendra_singh_adv" class="instagram-float" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="35" height="35" fill="currentColor"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        if(localStorage.getItem('bci_accepted') === 'true') {
+            document.getElementById('disclaimerModal').classList.add('hidden');
+            document.getElementById('mainContent').classList.remove('hidden');
+        }
+    });
+
+    function acceptDisclaimer() {
+        localStorage.setItem('bci_accepted', 'true');
+        document.getElementById('disclaimerModal').classList.add('hidden');
+        document.getElementById('mainContent').classList.remove('hidden');
+        window.scrollTo(0, 0); 
+    }
+</script>
+
+</body>
+</html>
