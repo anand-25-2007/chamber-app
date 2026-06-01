@@ -1,8 +1,8 @@
 package com.advocate.chamber.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import com.resend.*;
+import com.resend.services.emails.model.SendEmailRequest;
+import com.resend.services.emails.model.SendEmailResponse;
 import org.springframework.stereotype.Service;
 
 import com.advocate.chamber.model.ClientCase;
@@ -10,30 +10,36 @@ import com.advocate.chamber.model.ClientCase;
 @Service
 public class EmailNotificationService {
 
-    @Autowired
-    private JavaMailSender mailSender;
-
     public void sendChamberAlert(ClientCase clientData) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        
-        // This is the destination email address
-        message.setTo("amrendrasingh.advocate@gmail.com"); 
-        message.setSubject("New Client Intake: " + clientData.getCaseType() + " - " + clientData.getName());
-        
-        // Added the Contact Number to the email body
-        String emailBody = "Advocate Amrendra Singh,\n\n" +
-                "A new client has submitted an intake form via the website.\n\n" +
-                "Client Name: " + clientData.getName() + "\n" +
-                "Contact Number: " + clientData.getContactNumber() + "\n" +
-                "Case Stage: " + clientData.getCaseType() + "\n" +
-                "Date Submitted: " + clientData.getSubmissionTime() + "\n\n" +
-                "Brief Summary of the Matter:\n" + 
-                clientData.getSummary() + "\n\n" +
-                "---\nAutomated Chamber Notification System";
-                
-        message.setText(emailBody);
-        
-        // Triggers the email
-        mailSender.send(message);
+        // Fetch the API key safely from Railway Environment Variables
+        Resend resend = new Resend(System.getenv("RESEND_API_KEY"));
+
+        // Constructing the email body using HTML for professional formatting
+        String emailBody = "<strong>Advocate Amrendra Singh,</strong><br><br>" +
+                "A new client has submitted an intake form via the website.<br><br>" +
+                "<strong>Client Name:</strong> " + clientData.getName() + "<br>" +
+                "<strong>Contact Number:</strong> " + clientData.getContactNumber() + "<br>" +
+                "<strong>Case Stage:</strong> " + clientData.getCaseType() + "<br>" +
+                "<strong>Date Submitted:</strong> " + clientData.getSubmissionTime() + "<br><br>" +
+                "<strong>Brief Summary of the Matter:</strong><br>" + 
+                clientData.getSummary() + "<br><br>" +
+                "---<br><em>Automated Chamber Notification System</em>";
+
+        // Build the email request for the Resend API
+        SendEmailRequest sendEmailRequest = SendEmailRequest.builder()
+                .from("onboarding@resend.dev") // Mandatory sender for Resend free test accounts
+                .to("amrendrasingh.advocate@gmail.com") // Must match the email used to create the Resend account
+                .subject("New Client Intake: " + clientData.getCaseType() + " - " + clientData.getName())
+                .html(emailBody)
+                .build();
+
+        // Send the email via HTTPS (Bypassing Railway's SMTP Firewall)
+        try {
+            SendEmailResponse data = resend.emails().send(sendEmailRequest);
+            System.out.println("Email sent successfully via Resend API! ID: " + data.getId());
+        } catch (Exception e) {
+            System.err.println("Failed to send email via Resend.");
+            e.printStackTrace();
+        }
     }
 }

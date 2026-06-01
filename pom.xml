@@ -46,6 +46,11 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
+        <groupId>com.resend</groupId>
+        <artifactId>resend-java</artifactId>
+        <version>4.14.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.razorpay</groupId>
             <artifactId>razorpay-java</artifactId>
             <version>1.4.3</version>

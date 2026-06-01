@@ -63,7 +63,7 @@ public class ClientIntakeController {
         repository.save(newCase);
 
         // 6. Trigger Automated Email
-        //emailService.sendChamberAlert(newCase);
+        emailService.sendChamberAlert(newCase);
 
         // 7. Redirect user to the payment page
         return "redirect:/payment.html";
