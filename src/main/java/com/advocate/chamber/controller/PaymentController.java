@@ -18,8 +18,8 @@ import com.razorpay.RazorpayException;
 @Controller
 public class PaymentController {
 
-    private String keyId = "rzp_test_SvvI66tE5b3jL2";
-    private String keySecret = "9lsXdS8CB5TIAN6qvOU5yOFw";
+    private String keyId = System.getenv("RAZORPAY_KEY_ID");
+    private String keySecret = System.getenv("RAZORPAY_KEY_SECRET");
 
     // 1. This handles the page display
     @GetMapping("/payment.html")
