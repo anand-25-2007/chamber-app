@@ -232,10 +232,14 @@
             return false;
         }
 
-        // If they pass, disable button and show transmitting text
-        const btn = document.getElementById('submitBtn');
-        btn.innerHTML = 'Transmitting...';
+        // If they pass, update the text
+    const btn = document.getElementById('submitBtn');
+    btn.innerHTML = 'Transmitting...';
+    
+    // Add a 100-millisecond delay before locking the button so the form can actually send!
+    setTimeout(function() {
         btn.disabled = true;
+    }, 100);
         return true;
     }
 </script>
