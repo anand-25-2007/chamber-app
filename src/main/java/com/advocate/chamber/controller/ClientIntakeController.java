@@ -32,7 +32,7 @@ public class ClientIntakeController {
             @RequestParam("g-recaptcha-response") String recaptchaResponse) { 
 
         // 1. Set up the reCAPTCHA verification request
-        String secretKey = "6LfReQUtAAAAACN38x1LGZBeyZAwN3D0wt89Wb4q"; 
+        String secretKey = System.getenv("RECAPTCHA_SECRET");
         String verifyUrl = "https://www.google.com/recaptcha/api/siteverify";
 
         RestTemplate restTemplate = new RestTemplate();
