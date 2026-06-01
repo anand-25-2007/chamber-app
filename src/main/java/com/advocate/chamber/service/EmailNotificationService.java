@@ -1,11 +1,11 @@
 package com.advocate.chamber.service;
 
-import com.resend.*;
-import com.resend.services.emails.model.SendEmailRequest;
-import com.resend.services.emails.model.SendEmailResponse;
 import org.springframework.stereotype.Service;
 
 import com.advocate.chamber.model.ClientCase;
+import com.resend.Resend;
+import com.resend.services.emails.model.CreateEmailOptions;
+import com.resend.services.emails.model.CreateEmailResponse;
 
 @Service
 public class EmailNotificationService {
@@ -26,7 +26,7 @@ public class EmailNotificationService {
                 "---<br><em>Automated Chamber Notification System</em>";
 
         // Build the email request for the Resend API
-        SendEmailRequest sendEmailRequest = SendEmailRequest.builder()
+        CreateEmailOptions params = CreateEmailOptions.builder()
                 .from("onboarding@resend.dev") // Mandatory sender for Resend free test accounts
                 .to("amrendrasingh.advocate@gmail.com") // Must match the email used to create the Resend account
                 .subject("New Client Intake: " + clientData.getCaseType() + " - " + clientData.getName())
@@ -35,7 +35,7 @@ public class EmailNotificationService {
 
         // Send the email via HTTPS (Bypassing Railway's SMTP Firewall)
         try {
-            SendEmailResponse data = resend.emails().send(sendEmailRequest);
+            CreateEmailResponse data = resend.emails().send(params);
             System.out.println("Email sent successfully via Resend API! ID: " + data.getId());
         } catch (Exception e) {
             System.err.println("Failed to send email via Resend.");
